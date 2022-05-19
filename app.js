@@ -28,7 +28,7 @@ async function connection(client) {
     console.log(res);
 }
 
-connection(pool);
+//connection(pool);
 
 serv.get("/api/pizza", async (req, res)=>{
     const retn = {
@@ -50,6 +50,11 @@ serv.get("/api/pizza", async (req, res)=>{
 serv.get('/',function (req,res,next) {
     res.render("page_acceuil");
 });
+
+serv.get('/selection',function (req,res,next) {
+    res.render("page_selection");
+});
+
 
 serv.get('/livraison',function (req,res) {
 
