@@ -80,8 +80,15 @@ serv.get('/livraison',function (req,res) {
     res.render("page_livraison.ejs", {produits:produit,commandes:commande});
 });
 
+serv.post('/validationCommande',function(req,res){
+    let id_commande = req.body.commandeid
+    console.log(id_commande);
+    commande[id_commande][6]=true;
+    res.render("page_livraison.ejs", {produits:produit,commandes:commande})
+});
+
 serv.post('/', function(req, res){
 
 });
-  
+
 serv.listen(port, () => {console.log(`Connexion etablie sur http://localhost:${port}`)});
