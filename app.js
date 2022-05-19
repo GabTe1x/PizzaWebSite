@@ -18,6 +18,12 @@ const pool = new pg.Pool({
     port: 5432
 });
 
+const commande = 
+[
+    [1,'Dio','ZaWarudo','Avenue de France','Padovani',10],
+    [2,'Dio','ZaWarudo','Place des invalides','Padovani',10],
+    [3,'Dio','ZaWarudo','Boulevard Roquefort','Padovani',10]
+];
 /* 
 postgres=# CREATE USER root_pizzeria WITH PASSWORD 'pizza001';
 postgres=# CREATE DATABASE bdd_pizzeria OWNER root_pizzeria;
@@ -28,7 +34,7 @@ async function connection(client) {
     console.log(res);
 }
 
-connection(pool);
+//connection(pool);
 
 serv.get("/api/pizza", async (req, res)=>{
     const retn = {
@@ -54,7 +60,7 @@ serv.get('/',function (req,res,next) {
 serv.get('/livraison',function (req,res) {
 
     console.log("Demande la page Livraison");
-  //  res.render("page_livraison.ejs", {commande:});
+    res.render("page_livraison.ejs", {commandes:commande});
 });
 
 serv.post('/', function(req, res){
