@@ -69,6 +69,11 @@ serv.get('/',function (req,res,next) {
     res.render("page_acceuil");
 });
 
+serv.get('/selection',function (req,res,next) {
+    res.render("page_selection");
+});
+
+
 serv.get('/livraison',function (req,res) {
 
     console.log("Demande la page Livraison");
