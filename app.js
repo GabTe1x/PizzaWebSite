@@ -18,6 +18,24 @@ const pool = new pg.Pool({
     port: 5432
 });
 
+var commande = 
+[
+    [1,'Dio','ZaWarudo','Avenue de France','Padovani',10,true],
+    [2,'Dio','ZaWarudo','Place des invalides','Padovani',10,true],
+    [3,'Dio','ZaWarudo','Boulevard Roquefort','Padovani',10,false]
+];
+var produit =
+[
+    [["Coca Cola",2,"33cl",3],
+    ["Margarita",3,"XL",9],
+    ["Chicken wing",1,"12",8]],
+    [["Coca Cola",2,"33cl",3],
+    ["Margarita",3,"XL",9],
+    ["Chicken wing",1,"12",8]],
+    [["Coca Cola",2,"33cl",3],
+    ["Margarita",3,"XL",9],
+    ["Chicken wing",1,"12",8]]
+]
 /* 
 postgres=# CREATE USER root_pizzeria WITH PASSWORD 'pizza001';
 postgres=# CREATE DATABASE bdd_pizzeria OWNER root_pizzeria;
@@ -59,7 +77,7 @@ serv.get('/selection',function (req,res,next) {
 serv.get('/livraison',function (req,res) {
 
     console.log("Demande la page Livraison");
-  //  res.render("page_livraison.ejs", {commande:});
+    res.render("page_livraison.ejs", {produits:produit,commandes:commande});
 });
 
 serv.post('/', function(req, res){
