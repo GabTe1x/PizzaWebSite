@@ -43,9 +43,12 @@
                                 </ul>
                                 <p>Prix total <%= sum %> €</p>
                                 <%if(commandes[i][6]){%>
-                                    <p class="text-danger">Commande attribuée</p>
+                                <p class="text-danger">Commande attribuée</p>
                                 <%}else{%>
-                                <input class="btn btn-primary" type="submit" value="Je m'en occupe">
+                                <form action="/validationCommande" method="post">
+                                    <input type="hidden" value="<%=i%>" name="commandeid">
+                                    <input class="btn btn-primary" type="submit" value="Je m'en occupe">
+                                </form>
                                 <%}%>
                         </div>
                     </div>
