@@ -60,6 +60,71 @@ serv.get("/api/pizza", async (req, res)=>{
                 nom: "Kabyle",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
+            },
+            {
+                nom: "Kabyle",
+                prix: 59.90,
+                url: "https://picsum.photos/200"
             }
         ]};
     res.json(retn);

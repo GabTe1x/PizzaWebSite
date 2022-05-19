@@ -11,8 +11,24 @@
     <%- include ('header/navbar.ejs') %>
     <div class="container">
         <div class="row">
-            <div id="pizzas">
-            </div>
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Pizza</a>
+              <div id="pizzas"></div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nos entrées</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nos pizza</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Nos dessert</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Nos dessert</a>
+            </li>
+          </ul>
         </div>
     </div>
 
@@ -25,20 +41,25 @@
 
       let div = $("#pizzas");
       //Methode ajax
-      $.get("/api/pizza", res => {
-        res.pizzas.forEach(pizza => div.append(`
-            <div class="card" style="width: 18rem;">
-            <img  src=${pizza.url} class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">${pizza.nom}</h5>
-                <p class="card-text">Pizza à la tomate fait maison.</p>
-                <p class="card-text">Prix ${pizza.prix}$</p>
-
-                <a href="#" class="btn btn-primary">Ajouter </a>
-            </div>
-            </div>`
-            ));
-      });
+      $.ajax({
+            url: "/api/pizza",
+            type: "GET",
+            success: function(res) {
+              res.pizzas.forEach(pizza => div.append(`
+                <div class="card" style="width: 18rem;">
+                <img  src=${pizza.url} class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${pizza.nom}</h5>
+                    <p class="card-text">Pizza à la tomate fait maison.</p>
+                    <p class="card-text">Prix ${pizza.prix}$</p>
+                    <a href="#" class="btn btn-primary">Ajouter </a>
+                </div>
+                </div>`
+              ));
+            }, error : function (err) {
+                console.log(err);
+            }
+        });
     });
   </script>  
   </body>
