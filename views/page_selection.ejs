@@ -10,28 +10,43 @@
     <body>
     <%- include ('header/navbar.ejs') %>
     <div class="container">
-        <div class="row">
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Pizza</a>
-              <div id="pizzas"></div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Nos entrées</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Nos pizza</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Nos dessert</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Nos dessert</a>
-            </li>
-          </ul>
-        </div>
-    </div>
+        <div class="col">
+          <div> 
+          <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Nos menus</button>
+              <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Nos entrées</button>
+              <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Nos pizzas</button>
+              <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Nos boissons</button>
+            </div>
 
+            <div class="tab-content" id="v-pills-tabContent">
+              <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"> 
+                <div id="pizzas" class="row"> </div>
+              </div>
+              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div id="boisson" class="row"> </div>
+              </div>
+              <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+              <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Mon panier</button>
+    </div>
+    </div>
+  
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Mon panier</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        ...
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
@@ -46,12 +61,34 @@
             type: "GET",
             success: function(res) {
               res.pizzas.forEach(pizza => div.append(`
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 15rem;">
                 <img  src=${pizza.url} class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${pizza.nom}</h5>
                     <p class="card-text">Pizza à la tomate fait maison.</p>
                     <p class="card-text">Prix ${pizza.prix}$</p>
+                    <a href="#" class="btn btn-primary">Ajouter </a>
+                </div>
+                </div>`
+              ));
+            }, error : function (err) {
+                console.log(err);
+            }
+        });
+
+      let divboisson = $("#boisson");
+      //Methode ajax
+      $.ajax({
+            url: "/api/boisson",
+            type: "GET",
+            success: function(res) {
+              res.boisson.forEach(boisson => divboisson.append(`
+                <div class="card" style="width: 15rem;">
+                <img  src=${boisson.url} class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${boisson.nom}</h5>
+                    <p class="card-text">Pizza à la tomate fait maison.</p>
+                    <p class="card-text">Prix ${boisson.prix}$</p>
                     <a href="#" class="btn btn-primary">Ajouter </a>
                 </div>
                 </div>`

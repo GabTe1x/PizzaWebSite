@@ -85,44 +85,46 @@ serv.get("/api/pizza", async (req, res)=>{
                 nom: "Kabyle",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
+            }
+        ]};
+    res.json(retn);
+});
+
+serv.get("/api/boisson", async (req, res)=>{
+    const retn = {
+        boisson: [
+            {
+                nom: "Coca",
+                prix: 29.90,
+                url: "https://picsum.photos/200"
             },
             {
-                nom: "Kabyle",
+                nom: "Pespi",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
             },
             {
-                nom: "Kabyle",
+                nom: "7up",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
             },
             {
-                nom: "Kabyle",
+                nom: "Lipton",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
             },
             {
-                nom: "Kabyle",
+                nom: "Jus d'orange",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
             },
             {
-                nom: "Kabyle",
+                nom: "Biere",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
             },
             {
-                nom: "Kabyle",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Kabyle",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Kabyle",
+                nom: "Biere Kabyle",
                 prix: 59.90,
                 url: "https://picsum.photos/200"
             }
