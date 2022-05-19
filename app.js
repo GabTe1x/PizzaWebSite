@@ -18,13 +18,13 @@ const pool = new pg.Pool({
     port: 5432
 });
 
-const commande = 
+var commande = 
 [
-    [1,'Dio','ZaWarudo','Avenue de France','Padovani',10],
-    [2,'Dio','ZaWarudo','Place des invalides','Padovani',10],
-    [3,'Dio','ZaWarudo','Boulevard Roquefort','Padovani',10]
+    [1,'Dio','ZaWarudo','Avenue de France','Padovani',10,true],
+    [2,'Dio','ZaWarudo','Place des invalides','Padovani',10,true],
+    [3,'Dio','ZaWarudo','Boulevard Roquefort','Padovani',10,false]
 ];
-const produit =
+var produit =
 [
     [["Coca Cola",2,"33cl",3],
     ["Margarita",3,"XL",9],

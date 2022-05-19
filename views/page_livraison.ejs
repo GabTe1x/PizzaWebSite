@@ -13,6 +13,7 @@
         crossorigin="anonymous"></script>
 
 <body>
+    <%- include ('header/navbar.ejs') %>
     <h2 class="flex">
        Commandes en cours : 
     </h2>
@@ -30,7 +31,7 @@
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             Pour <%=commandes[i][1]%>
-                                <%=commandes[i][2]%> à livrer au <%=commandes[i][3]%> à <%=commandes[i][5]%>.
+                            <%=commandes[i][2]%> à livrer au <%=commandes[i][3]%> à <%=commandes[i][5]%>.
                                 <ul>
                                     <% var sum=0 %>
                                     <%for(var j=0; j<produits[i].length;j++){%>
@@ -40,8 +41,12 @@
                                     </li>
                                     <%}%>
                                 </ul>
-                                <p>Prix total <%=sum%> €</p>
+                                <p>Prix total <%= sum %> €</p>
+                                <%if(commandes[i][6]){%>
+                                    <p class="text-danger">Commande attribuée</p>
+                                <%}else{%>
                                 <input class="btn btn-primary" type="submit" value="Je m'en occupe">
+                                <%}%>
                         </div>
                     </div>
                 </div>
