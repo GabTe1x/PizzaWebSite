@@ -17,6 +17,15 @@ const pool = new pg.Pool({
     password: "pizza001",
     port: 5432
 });
+var commentaire =
+[
+    ["Sam","Pairturbe","Les meilleurs pizzas de mon quartier"],
+    ["May","Chavait","Je suis devenu client fidèle dès la première hehe"],
+    ["Gerad","Menvoussa","Un service de livraison qui met getir à genoux"],
+    ["Willy","& Gaby","La qualitée au meilleur prix"],
+    ["Jean","Rapheaul","MasterClass"],
+    ["Sarah","Molih","Un site sans égal !"]
+];
 
 var commande = 
 [
@@ -66,7 +75,7 @@ serv.get("/api/pizza", async (req, res)=>{
 });
 
 serv.get('/',function (req,res,next) {
-    res.render("page_acceuil");
+    res.render("page_accueil",{commentaire:commentaire});
 });
 
 serv.get('/selection',function (req,res,next) {
@@ -87,8 +96,5 @@ serv.post('/validationCommande',function(req,res){
     res.render("page_livraison.ejs", {produits:produit,commandes:commande})
 });
 
-serv.post('/', function(req, res){
-
-});
 
 serv.listen(port, () => {console.log(`Connexion etablie sur http://localhost:${port}`)});
