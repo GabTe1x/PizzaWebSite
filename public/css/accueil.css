@@ -1,0 +1,7 @@
+#multichoix{
+    transition: transform 3s ease-in-out;
+}
+
+#multichoix:hover {
+    transform: rotate(360deg);
+}
