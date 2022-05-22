@@ -45,7 +45,7 @@
                                 <%if(commandes[i][6]){%>
                                 <p class="text-danger">Commande attribuée</p>
                                 <%}else{%>
-                                <form action="/validationCommande" method="post">
+                                <form action="/validationLivraison" method="post">
                                     <input type="hidden" value="<%=i%>" name="commandeid">
                                     <input class="btn btn-primary" type="submit" value="Je m'en occupe">
                                 </form>
