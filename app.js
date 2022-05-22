@@ -87,8 +87,5 @@ serv.post('/validationCommande',function(req,res){
     res.render("page_livraison.ejs", {produits:produit,commandes:commande})
 });
 
-serv.post('/', function(req, res){
-
-});
 
 serv.listen(port, () => {console.log(`Connexion etablie sur http://localhost:${port}`)});
