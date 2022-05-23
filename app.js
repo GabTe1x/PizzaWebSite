@@ -9,18 +9,13 @@ let bodyParser = require('body-parser');
 serv.use(bodyParser.json());
 serv.use(bodyParser.urlencoded({ extended: true }));
 serv.use(session({
-    'secret': '343ji43j4n3jn4jk3n'
+    'secret': '343ji43j4n3jn4jk3n',
+    resave: true,
+    saveUninitialized: true
 }));
 
 const pg = require('pg');
-// modifier valeurs selon bdd
-/*const pool = new pg.Pool({
-    user: 'teixeira',
-    host: 'localhost',
-    database: 'gaby_will',
-    password: "pizza",
-    port: 5432
-});*/
+
 const pool = new pg.Pool({
     user: 'teixeira',
     host: 'localhost',
@@ -58,11 +53,22 @@ let produit =
         ["Chicken wing", 1, "12", 8]]
     ]
 
-async function connection(client) {
-    let res = await client.connect();
+async function getPizzas() {
+    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
+    console.log(res.rows);
 }
-
-//connection(pool);
+async function getBoissons() {
+    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
+    console.log(res.rows);
+}
+async function getDesserts() {
+    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
+    console.log(res.rows);
+}
+async function getEntrees() {
+    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit>19");
+    console.log(res.rows);
+}
 
 serv.get("/api/pizza", async (req, res) => {
     const retn = {
@@ -174,7 +180,6 @@ serv.get('/custompizza',function (req,res,next) {
 
 
 serv.get('/livraison',function (req,res) {
-
     console.log("Demande la page Livraison");
     res.render("page_livraison.ejs", { produits: produit, commandes: commande });
 });
