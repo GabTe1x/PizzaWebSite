@@ -61,39 +61,46 @@ serv.get("/api/pizza", async (req, res)=>{
     const retn = {
         pizzas: [
             {
+                id: 0,
                 nom: "Marguerita",
                 prix: 29.90,
-                url: "https://picsum.photos/200"
+                url: "images/pizza_selection/marguerita.jpg"
             },
             {
-                nom: "Kabyle",
+                id: 1,
+                nom: "4 Fromages",
                 prix: 59.90,
-                url: "https://picsum.photos/200"
+                url: "images/pizza_selection/4fromages.jpg"
             },
             {
-                nom: "Kabyle",
+                id: 2,
+                nom: "Chevre miel",
                 prix: 59.90,
-                url: "https://picsum.photos/200"
+                url: "images/pizza_selection/chevremiel.jpg"
             },
             {
-                nom: "Kabyle",
+                id: 3,
+                nom: "Raclette",
                 prix: 59.90,
-                url: "https://picsum.photos/200"
+                url: "images/pizza_selection/raclette.jpg"
             },
             {
-                nom: "Kabyle",
+                id: 4,
+                nom: "Vegetarienne",
                 prix: 59.90,
-                url: "https://picsum.photos/200"
+                url: "images/pizza_selection/vegetarienne.jpg"
             },
             {
-                nom: "Kabyle",
+                id: 5,
+                nom: "Supreme ",
                 prix: 59.90,
-                url: "https://picsum.photos/200"
+                url: "images/pizza_selection/supreme.jpg"
             },
             {
-                nom: "Kabyle",
+                id: 6,
+                nom: "Texane bbq",
                 prix: 59.90,
-                url: "https://picsum.photos/200"
+                url: "images/pizza_selection/texanebbq.jpg"
             }
         ]};
     res.json(retn);
@@ -158,10 +165,17 @@ serv.get('/livraison',function (req,res) {
 
 serv.post('/validationCommande',function(req,res){
     let id_commande = req.body.commandeid
-    console.log(id_commande);
     commande[id_commande][6]=true;
     res.render("page_livraison.ejs", {produits:produit,commandes:commande})
 });
+
+serv.post('/demande-product',function(req,res){
+    let id_commande = req.body.prodid;
+    console.log(JSON.stringify(req.body));
+ //   console.log(id_commande + "blabla");
+    res.json(commande[id_commande][1]);
+});
+
 
 
 serv.listen(port, () => {console.log(`Connexion etablie sur http://localhost:${port}`)});
