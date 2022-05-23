@@ -13,12 +13,19 @@ serv.use(session({
 }));
 
 const pg = require('pg');
-
-const pool = new pg.Pool({
-    user: 'root_pizzeria',
+// modifier valeurs selon bdd
+/*const pool = new pg.Pool({
+    user: 'teixeira',
     host: 'localhost',
-    database: 'bdd_pizzeria',
-    password: "pizza001",
+    database: 'gaby_will',
+    password: "pizza",
+    port: 5432
+});*/
+const pool = new pg.Pool({
+    user: 'teixeira',
+    host: 'localhost',
+    database: 'gaby_will',
+    password: "pizza",
     port: 5432
 });
 
@@ -50,14 +57,9 @@ var produit =
         ["Margarita", 3, "XL", 9],
         ["Chicken wing", 1, "12", 8]]
     ]
-/* 
-postgres=# CREATE USER root_pizzeria WITH PASSWORD 'pizza001';
-postgres=# CREATE DATABASE bdd_pizzeria OWNER root_pizzeria;
-*/
 
 async function connection(client) {
     let res = await client.connect();
-    console.log(res);
 }
 
 //connection(pool);
@@ -186,10 +188,7 @@ serv.post('/validationLivraison', function (req, res) {
 serv.post('/demande-product',function(req,res){
     let id_commande = req.body.prodid;
     console.log(JSON.stringify(req.body.prodid));
- //   console.log(id_commande + "blabla");
     res.json(commande[id_commande][0]);
 });
-
-
 
 serv.listen(port, () => { console.log(`Connexion etablie sur http://localhost:${port}`) });
