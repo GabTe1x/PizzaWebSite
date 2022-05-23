@@ -50,7 +50,7 @@
                         <h5 class="card-title">
                           <%=entrees[i]["nom_produit"]%>
                         </h5>
-                        <p class="card-text">Prix <%= entrees[i]["prix"]%> €</p>
+                        <p class="card-text"><%=entrees[i]["produit_description"]%><br> Prix <%= entrees[i]["prix"]%> €</p>
                         <form action="demande-product" method="post">
                           <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             value="Ajouter">
@@ -70,7 +70,7 @@
                       <h5 class="card-title">
                         <%=pizzas[i]["nom_produit"]%>
                       </h5>
-                      <p class="card-text">Prix <%= pizzas[i]["prix"]%> €</p>
+                      <p class="card-text"><%=pizzas[i]["produit_description"]%><br> Prix <%= pizzas[i]["prix"]%> €</p>
                       <form action="demande-product" method="post">
                         <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                           value="Ajouter">
@@ -90,7 +90,7 @@
                         <h5 class="card-title">
                           <%=boissons[i]["nom_produit"]%>
                         </h5>
-                        <p class="card-text">Prix <%= boissons[i]["prix"]%> €</p>
+                        <p class="card-text"><%=boissons[i]["produit_description"]%><br> Prix <%= boissons[i]["prix"]%> €</p>
                         <form action="demande-product" method="post">
                           <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             value="Ajouter">
@@ -110,7 +110,7 @@
                         <h5 class="card-title">
                           <%=deserts[i]["nom_produit"]%>
                         </h5>
-                        <p class="card-text">Prix <%=deserts[i]["prix"]%> €</p>
+                        <p class="card-text"><%=deserts[i]["produit_description"]%><br> Prix <%=deserts[i]["prix"]%> €</p>
                         <form action="demande-product" method="post">
                           <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             value="Ajouter">

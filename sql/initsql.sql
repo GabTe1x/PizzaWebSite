@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS commandes_listes (
 CREATE TABLE IF NOT EXISTS produits (
   id_produit SERIAL PRIMARY KEY,
   nom_produit varchar(255) NOT NULL,
+  produit_description varchar(255) NOT NULL,
   url_image varchar(255) NOT NULL,
   prix integer NOT NULL
 );
