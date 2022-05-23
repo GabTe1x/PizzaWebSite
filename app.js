@@ -17,6 +17,7 @@ const pool = new pg.Pool({
     password: "pizza001",
     port: 5432
 });
+
 var commentaire =
 [
     ["Sam","Pairturbe","Les meilleurs pizzas de mon quartier"],
@@ -156,6 +157,10 @@ serv.get('/selection',function (req,res,next) {
     res.render("page_selection");
 });
 
+serv.get('/custompizza',function (req,res,next) {
+    res.render("page_custom");
+});
+
 
 serv.get('/livraison',function (req,res) {
 
@@ -171,9 +176,9 @@ serv.post('/validationCommande',function(req,res){
 
 serv.post('/demande-product',function(req,res){
     let id_commande = req.body.prodid;
-    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(req.body.prodid));
  //   console.log(id_commande + "blabla");
-    res.json(commande[id_commande][1]);
+    res.json(commande[id_commande][0]);
 });
 
 
