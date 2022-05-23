@@ -5,7 +5,7 @@ const port = 8080;
 
 serv.set('view engine', 'ejs');
 serv.use(express.static('public'));
-var bodyParser = require('body-parser');
+let bodyParser = require('body-parser');
 serv.use(bodyParser.json());
 serv.use(bodyParser.urlencoded({ extended: true }));
 serv.use(session({
@@ -22,7 +22,7 @@ const pool = new pg.Pool({
     port: 5432
 });
 
-var commentaire =
+let commentaire =
     [
         ["Sam", "Pairturbe", "Les meilleurs pizzas de mon quartier"],
         ["May", "Chavait", "Je suis devenu client fidèle dès la première hehe"],
@@ -32,13 +32,13 @@ var commentaire =
         ["Sarah", "Molih", "Un site sans égal !"]
     ];
 
-var commande =
+let commande =
     [
         [1, 'Dio', 'ZaWarudo', 'Avenue de France', 'Padovani', 10, true],
-        [2, 'Dio', 'ZaWarudo', 'Place des invalides', 'Padovani', 10, true],
-        [3, 'Dio', 'ZaWarudo', 'Boulevard Roquefort', 'Padovani', 10, false]
+        [2, 'Dio', 'ZaWrudo', 'Place des invalides', 'Padovani', 10, true],
+        [3, 'Dio', 'ZaWarudo', 'Bouleletd Roquefort', 'Padovani', 10, false]
     ];
-var produit =
+let produit =
     [
         [["Coca Cola", 2, "33cl", 3],
         ["Margarita", 3, "XL", 9],
