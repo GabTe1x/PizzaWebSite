@@ -34,13 +34,13 @@ CREATE TABLE IF NOT EXISTS commandes_listes (
 CREATE TABLE IF NOT EXISTS produits (
   id_produit SERIAL PRIMARY KEY,
   nom_produit varchar(255) NOT NULL,
+  url_image varchar(255) NOT NULL,
   prix varchar(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS taille_produit (
 	id_taille_produit SERIAL PRIMARY KEY,
-	taille integer NOT NULL CHECK (taille > 0 AND taille < 4),
-	facteur_taille float NOT NULL
+	taille integer NOT NULL CHECK (taille > 0 AND taille < 4)
 );
 /* PRODUIT DE BASE */
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS taille_produit (
 CREATE TABLE IF NOT EXISTS menu (
   id_menu SERIAL PRIMARY KEY,
   nom_menu varchar(255) NOT NULL,
-  prix varchar(255) NOT NULL
+  prix integer NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS menu_produit (
