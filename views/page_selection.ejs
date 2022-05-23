@@ -13,7 +13,6 @@
     <%- include ('header/navbar.ejs') %>
     <%- include ('import_scripts/scripts_utils.ejs') %>
 
-    <div class="container">
       <div class="row">
         <div class="d-md-flex align-items-start" id="panier">
           <div class="nav flex-column me-3">
@@ -23,31 +22,53 @@
         </div>
       </div>
       <div class="row">
-        <div class="d-md-flex align-items-start">
-          <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
-              type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Nos menus</button>
-            <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
-              type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Nos entrées</button>
-            <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages"
-              type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Nos pizzas</button>
-            <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
-              type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Nos boissons</button>
-            <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
-              type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Nos deserts</button>
-            <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
-              type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mes pizzas customs</button>
+        <div class="d-md-flex align-items-start" id="menu">
+          <div class="nav col-xm-12 col-md-2 nav-pills me-3" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active" id="control_menu" data-bs-toggle="pill" data-bs-target="#menus"
+              type="button" role="tab" aria-controls="menus" aria-selected="true">Nos menus</button>
+            <button class="nav-link" id="entrees_control" data-bs-toggle="pill" data-bs-target="#entrees"
+              type="button" role="tab" aria-controls="entrees" aria-selected="false">Nos entrées</button>
+            <button class="nav-link" id="pizza_control" data-bs-toggle="pill" data-bs-target="#pizza"
+              type="button" role="tab" aria-controls="pizza" aria-selected="false">Nos pizzas</button>
+            <button class="nav-link" id="boissons_control" data-bs-toggle="pill" data-bs-target="#boissons"
+              type="button" role="tab" aria-controls="boissons" aria-selected="false">Nos boissons</button>
+            <button class="nav-link" id="deserts_control" data-bs-toggle="pill" data-bs-target="#deserts"
+              type="button" role="tab" aria-controls="deserts" aria-selected="false">Nos deserts</button>
+            <!--<button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
+              type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mes pizzas customs</button>-->
           </div>
     
           <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="tab-pane fade show active" id="menus" role="tabpanel" aria-labelledby="control_menu">Menus pas fait
+            </div>
+            <div class="tab-pane fade" id="entrees" role="tabpanel" aria-labelledby="entrees_control">
+              <div class="row">
+                <% for (var i=0;i<entrees.length;i++) { %>
+                    <div class="card" style="width: 15rem;">
+                      <img src="<%=entrees[i]["url_image"]%>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <%=entrees[i]["nom_produit"]%>
+                        </h5>
+                        <p class="card-text">Prix <%= entrees[i]["prix"]%> €</p>
+                        <form action="demande-product" method="post">
+                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                            value="Ajouter">
+                          <input name="prodid" type="hidden" class="productclass" value='<%= entrees[i]["id_produits"] %>'>
+                        </form>
+                      </div>
+                    </div>
+                <% } %>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pizza" role="tabpanel" aria-labelledby="pizza_control">
              <div class="row">
               <% for (var i=0;i<pizzas.length;i++) { %>
                   <div class="card" style="width: 15rem;">
                     <img src="<%=pizzas[i]["url_image"]%>" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title">
-                        <%=pizzas[i]["nom_produits"]%>
+                        <%=pizzas[i]["nom_produit"]%>
                       </h5>
                       <p class="card-text">Prix <%= pizzas[i]["prix"]%> €</p>
                       <form action="demande-product" method="post">
@@ -60,17 +81,49 @@
               <% } %>
               </div>
             </div>
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-              <div id="boisson" class="row"> </div>
+            <div class="tab-pane fade" id="boissons" role="tabpanel" aria-labelledby="boissons_control">
+              <div class="row">
+                <% for (var i=0;i<boissons.length;i++) { %>
+                    <div class="card" style="width: 15rem;">
+                      <img src="<%=boissons[i]["url_image"]%>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <%=boissons[i]["nom_produit"]%>
+                        </h5>
+                        <p class="card-text">Prix <%= boissons[i]["prix"]%> €</p>
+                        <form action="demande-product" method="post">
+                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                            value="Ajouter">
+                          <input name="prodid" type="hidden" class="productclass" value='<%= boissons[i]["id_produits"] %>'>
+                        </form>
+                      </div>
+                    </div>
+                <% } %>
+                </div>
             </div>
-            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...
-            </div>
-            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...
+            <div class="tab-pane fade" id="deserts" role="tabpanel" aria-labelledby="deserts_control">
+              <div class="row">
+                <% for (var i=0;i<deserts.length;i++) { %>
+                    <div class="card" style="width: 15rem;">
+                      <img src="<%=deserts[i]["url_image"]%>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <%=deserts[i]["nom_produit"]%>
+                        </h5>
+                        <p class="card-text">Prix <%=deserts[i]["prix"]%> €</p>
+                        <form action="demande-product" method="post">
+                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                            value="Ajouter">
+                          <input name="prodid" type="hidden" class="productclass" value='<%= deserts[i]["id_produits"] %>'>
+                        </form>
+                      </div>
+                    </div>
+                <% } %>
+                </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
     <!-- PANIER - CANVAS --> 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">

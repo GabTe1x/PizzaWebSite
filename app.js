@@ -35,7 +35,7 @@ serv.get('/selection', async function (req, res) {
         req.session.cart = [];
     }
     const res_boissons = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
-    const res_entrees = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
+    const res_entrees = await pool.query("SELECT * FROM produits WHERE produits.id_produit>19");
     const res_deserts = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
     const res_pizzas = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
     res.render("page_selection.ejs", {
