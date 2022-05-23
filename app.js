@@ -17,161 +17,50 @@ serv.use(session({
 const pg = require('pg');
 
 const pool = new pg.Pool({
-    user: 'teixeira',
+    user: 'postgres',
     host: 'localhost',
-    database: 'gaby_will',
-    password: "pizza",
+    database: 'pizzeria',
+    password: "001",
     port: 5432
 });
 
-let commentaire =
-    [
-        ["Sam", "Pairturbe", "Les meilleurs pizzas de mon quartier"],
-        ["May", "Chavait", "Je suis devenu client fidèle dès la première hehe"],
-        ["Gerad", "Menvoussa", "Un service de livraison qui met getir à genoux"],
-        ["Willy", "& Gaby", "La qualitée au meilleur prix"],
-        ["Jean", "Rapheaul", "MasterClass"],
-        ["Sarah", "Molih", "Un site sans égal !"]
-    ];
-
-let commande =
-    [
-        [1, 'Dio', 'ZaWarudo', 'Avenue de France', 'Padovani', 10, true],
-        [2, 'Dio', 'ZaWrudo', 'Place des invalides', 'Padovani', 10, true],
-        [3, 'Dio', 'ZaWarudo', 'Bouleletd Roquefort', 'Padovani', 10, false]
-    ];
-let produit =
-    [
-        [["Coca Cola", 2, "33cl", 3],
-        ["Margarita", 3, "XL", 9],
-        ["Chicken wing", 1, "12", 8]],
-        [["Coca Cola", 2, "33cl", 3],
-        ["Margarita", 3, "XL", 9],
-        ["Chicken wing", 1, "12", 8]],
-        [["Coca Cola", 2, "33cl", 3],
-        ["Margarita", 3, "XL", 9],
-        ["Chicken wing", 1, "12", 8]]
-    ]
-
 async function getPizzas() {
     const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
-    console.log(res.rows);
+    return res.rows;
 }
 async function getBoissons() {
     const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
-    console.log(res.rows);
+    return res.rows;
 }
 async function getDesserts() {
     const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
-    console.log(res.rows);
+    return res.rows;
 }
 async function getEntrees() {
     const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit>19");
-    console.log(res.rows);
+    return res.rows;
 }
 
-serv.get("/api/pizza", async (req, res) => {
-    const retn = {
-        pizzas: [
-            {
-                id: 0,
-                nom: "Marguerita",
-                prix: 29.90,
-                url: "images/pizza_selection/marguerita.jpg"
-            },
-            {
-                id: 1,
-                nom: "4 Fromages",
-                prix: 59.90,
-                url: "images/pizza_selection/4fromages.jpg"
-            },
-            {
-                id: 2,
-                nom: "Chevre miel",
-                prix: 59.90,
-                url: "images/pizza_selection/chevremiel.jpg"
-            },
-            {
-                id: 3,
-                nom: "Raclette",
-                prix: 59.90,
-                url: "images/pizza_selection/raclette.jpg"
-            },
-            {
-                id: 4,
-                nom: "Vegetarienne",
-                prix: 59.90,
-                url: "images/pizza_selection/vegetarienne.jpg"
-            },
-            {
-                id: 5,
-                nom: "Supreme ",
-                prix: 59.90,
-                url: "images/pizza_selection/supreme.jpg"
-            },
-            {
-                id: 6,
-                nom: "Texane bbq",
-                prix: 59.90,
-                url: "images/pizza_selection/texanebbq.jpg"
-            }
-        ]};
-    res.json(retn);
-});
-
-serv.get("/api/boisson", async (req, res)=>{
-    const retn = {
-        boisson: [
-            {
-                nom: "Coca",
-                prix: 29.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Pespi",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "7up",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Lipton",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Jus d'orange",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Biere",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Biere Kabyle",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            }
-        ]
-    };
-    res.json(retn);
-});
-
 serv.get('/', function (req, res) {
+    let commentaire = [["salut"]];
     res.render("page_accueil", { commentaire: commentaire });
 });
 
-serv.get('/selection', function (req, res) {
+serv.get('/selection', async function (req, res) {
     if (typeof req.session == 'undefined') {
         req.session.cart = [];
     }
-    console.log(req.session.views);
-    res.render("page_selection");
+    const res_boissons = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
+    const res_entrees = pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
+    const res_deserts = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
+    const res_pizzas = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
+    
+    res.render("page_selection.ejs", {
+        pizzas: res_pizzas.rows,
+        boissons: getBoissons(),
+        deserts: getDesserts(),
+        entree: getEntrees(),
+     });
 });
 
 serv.get('/custompizza',function (req,res,next) {
