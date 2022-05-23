@@ -64,98 +64,6 @@ async function connection(client) {
 
 //connection(pool);
 
-serv.get("/api/pizza", async (req, res) => {
-    const retn = {
-        pizzas: [
-            {
-                id: 0,
-                nom: "Marguerita",
-                prix: 29.90,
-                url: "images/pizza_selection/marguerita.jpg"
-            },
-            {
-                id: 1,
-                nom: "4 Fromages",
-                prix: 59.90,
-                url: "images/pizza_selection/4fromages.jpg"
-            },
-            {
-                id: 2,
-                nom: "Chevre miel",
-                prix: 59.90,
-                url: "images/pizza_selection/chevremiel.jpg"
-            },
-            {
-                id: 3,
-                nom: "Raclette",
-                prix: 59.90,
-                url: "images/pizza_selection/raclette.jpg"
-            },
-            {
-                id: 4,
-                nom: "Vegetarienne",
-                prix: 59.90,
-                url: "images/pizza_selection/vegetarienne.jpg"
-            },
-            {
-                id: 5,
-                nom: "Supreme ",
-                prix: 59.90,
-                url: "images/pizza_selection/supreme.jpg"
-            },
-            {
-                id: 6,
-                nom: "Texane bbq",
-                prix: 59.90,
-                url: "images/pizza_selection/texanebbq.jpg"
-            }
-        ]};
-    res.json(retn);
-});
-
-serv.get("/api/boisson", async (req, res)=>{
-    const retn = {
-        boisson: [
-            {
-                nom: "Coca",
-                prix: 29.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Pespi",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "7up",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Lipton",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Jus d'orange",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Biere",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            },
-            {
-                nom: "Biere Kabyle",
-                prix: 59.90,
-                url: "https://picsum.photos/200"
-            }
-        ]
-    };
-    res.json(retn);
-});
-
 serv.get('/', function (req, res) {
     res.render("page_accueil", { commentaire: commentaire });
 });
@@ -165,16 +73,14 @@ serv.get('/selection', function (req, res) {
         req.session.cart = [];
     }
     console.log(req.session.views);
-    res.render("page_selection");
+    res.render("page_selection" {produits:produit,commandes:commande} );
 });
 
 serv.get('/custompizza',function (req,res,next) {
     res.render("page_custom");
 });
 
-
 serv.get('/livraison',function (req,res) {
-
     console.log("Demande la page Livraison");
     res.render("page_livraison.ejs", { produits: produit, commandes: commande });
 });
@@ -187,8 +93,13 @@ serv.post('/validationLivraison', function (req, res) {
 
 serv.post('/demande-product',function(req,res){
     let id_commande = req.body.prodid;
+    res.json({prodid: id_commande});
+});
+
+serv.post('/panier-valide',function(req,res){
+    let id_commande = req.body.prodid;
     console.log(JSON.stringify(req.body.prodid));
-    res.json(commande[id_commande][0]);
+    res.json("prout");
 });
 
 serv.listen(port, () => { console.log(`Connexion etablie sur http://localhost:${port}`) });

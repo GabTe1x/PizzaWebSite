@@ -16,8 +16,7 @@ $(document).ready(function(event) {
                   <h5 class="card-title">${produit.nom}</h5>
                   <p class="card-text">Pizza à la tomate fait maison.</p>
                   <p class="card-text">Prix ${produit.prix}$</p>
-                  <form action="demande-product" method="post">
-                    <input id="ajouter" type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Ajouter">
+                    <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Ajouter">
                     <input name="prodid" type="hidden" class="productclass" value="${produit.id}">
                   </form> 
               </div>`
@@ -28,19 +27,25 @@ $(document).ready(function(event) {
       });
     }
 
-    jQuery(document).on('click', '#ajouter', function(eventclick) {
-      eventclick.preventDefault();
-      $.ajax({
-        url: "/demande-product",
-        type: "POST",
-        data: $(this).parent("form").attr("prodid"),
-        success: function(res) {
-          console.log(res.prodid + "lblbllzbl");
-        }, error : function (err) {
-            console.log(err);
-        }
+    $(".ajouter").click(function (e) {
+      e.preventDefault();
+      console.log($(this).attr("prodid") + " TEST");
     });
-   });
+
+   /*  $(".ajouter").click(function(event) {
+      console.log($(this).attr("prodid") + " TEST");
+     event.preventDefault();
+        $.ajax({
+          url: "/demande-product",
+          type: "POST",
+          data: $(this).attr("prodid"),
+          success: function(res) {
+            alert(res.prodid + "lblbllzbl");
+          }, error : function (err) {
+          console.log(data);
+          }
+        });
+      });*/
 
     function getFromProductByIdFromAPI(id){
       let div = $("#staticBackdrop");
