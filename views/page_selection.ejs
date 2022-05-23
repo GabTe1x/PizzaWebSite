@@ -52,6 +52,7 @@
                             <form action="demande-product" method="post">
                               <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Ajouter">
                               <input name="prodid" type="hidden" class="productclass" value='<%= pizza[0] %>'>
+                              <input name="type" type="hidden" class="productclass" value='produit'>
                             </form> 
                         </div>`
                 <% }); %>
@@ -75,7 +76,9 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        la panier
+        <%panier.forEach(function(panier){   %>
+              <p> <%=panier%></p>
+          <% } %>
       </div>
     </div>
 
