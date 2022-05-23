@@ -41,20 +41,24 @@
     
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              
-              <%pizzas.forEach(function(pizza){   %>
-                      <div class="card" style="width: 15rem;">
-                        <img  src= '/<%=pizza[2]%>' class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"> <%= pizza[1] %> </h5>
-                            <p class="card-text">Pizza à la tomate fait maison.</p>
-                            <p class="card-text">Prix  <%= pizza[3] %></p>
-                            <form action="demande-product" method="post">
-                              <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Ajouter">
-                              <input name="prodid" type="hidden" class="productclass" value='<%= pizza[0] %>'>
-                            </form> 
-                        </div>`
-                <% }); %>
+             <div class="row">
+              <% for (var i=0;i<pizzas.length;i++) { %>
+                  <div class="card" style="width: 15rem;">
+                    <img src="<%=pizzas[i]["url_image"]%>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <%=pizzas[i]["nom_produits"]%>
+                      </h5>
+                      <p class="card-text">Prix <%= pizzas[i]["prix"]%> €</p>
+                      <form action="demande-product" method="post">
+                        <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                          value="Ajouter">
+                        <input name="prodid" type="hidden" class="productclass" value='<%= pizzas[i]["id_produits"] %>'>
+                      </form>
+                    </div>
+                  </div>
+              <% } %>
+              </div>
             </div>
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
               <div id="boisson" class="row"> </div>

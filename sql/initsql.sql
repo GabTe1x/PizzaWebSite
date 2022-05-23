@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS commandes_listes (
   types_produit integer NOT NULL CHECK (types_produit >= 0 AND types_produit < 3), /* 0=PIZZA, 1=MENU, 2= PIZZA CUSTOM */
 	id_produits integer NOT NULL,
   id_taille_produit integer NOT NULL,
-
   FOREIGN KEY (id_taille_produit) REFERENCES taille_produit (id_taille_produit)
 );
 

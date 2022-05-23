@@ -17,29 +17,13 @@ serv.use(session({
 const pg = require('pg');
 
 const pool = new pg.Pool({
-    user: 'postgres',
+    user: 'teixeira',
     host: 'localhost',
-    database: 'pizzeria',
-    password: "001",
+    database: 'gaby_will',
+    password: "pizza",
     port: 5432
 });
 
-async function getPizzas() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
-    return res.rows;
-}
-async function getBoissons() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
-    return res.rows;
-}
-async function getDesserts() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
-    return res.rows;
-}
-async function getEntrees() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit>19");
-    return res.rows;
-}
 
 serv.get('/', function (req, res) {
     let commentaire = [["salut"]];
@@ -51,15 +35,14 @@ serv.get('/selection', async function (req, res) {
         req.session.cart = [];
     }
     const res_boissons = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
-    const res_entrees = pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
+    const res_entrees = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
     const res_deserts = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
     const res_pizzas = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
-    
     res.render("page_selection.ejs", {
         pizzas: res_pizzas.rows,
-        boissons: getBoissons(),
-        deserts: getDesserts(),
-        entree: getEntrees(),
+        boissons: res_boissons.rows,
+        deserts: res_deserts.rows,
+        entrees: res_entrees.rows
      });
 });
 
