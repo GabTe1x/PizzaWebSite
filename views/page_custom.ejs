@@ -24,95 +24,97 @@
                      
                     <form action="/validationPizzaCustom" method="post">
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nom de la pizza </label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputEmail3" placeholder="Pizza party, pizza miam...">
-                            </div>
+                          <label for="inputEmail3" class="col-sm-2 col-form-label">Nom de la pizza </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail3" placeholder="Pizza party, pizza miam..." required>
                           </div>
-                
+                        </div>
+                        <div class="form-group row">
                           <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                            <input type="radio" id="customRadioInline1" name="pate" value="epaisse" class="custom-control-input" checked>
                             <label class="custom-control-label" for="customRadioInline1">Pate epaisse</label>
                           </div>
                           <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                            <input type="radio" id="customRadioInline2" name="pate" value="fine" class="custom-control-input">
                             <label class="custom-control-label" for="customRadioInline2">Pate fine</label>
                           </div>
-                          <stroke> ------------------------- </stroke>
-
-                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadioInline1">Base creme</label>
+                        </div>
+                        <stroke> ------------------------- </stroke>
+                        <div class="form-group row">
+                          <div clradioass="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="customRadioInline3" name="base" class="custom-control-input" checked>
+                            <label class="custom-control-label" for="customRadioInline3">Base creme</label>
                           </div>
                           <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadioInline2">Base tomate</label>
+                            <input type="radio" id="customRadioInline4" name="base" class="custom-control-input">
+                            <label class="custom-control-label" for="customRadioInline4">Base tomate</label>
                           </div>
-
-                          <div class="form-group row">
-                            <div class="col-sm-2">Poulet</div>
-                            <div class="col-sm-10">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                <label class="form-check-label" for="gridCheck1">
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="col-sm-2">Kebab</div>
-                            <div class="col-sm-10">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                <label class="form-check-label" for="gridCheck1">
-                                </label>
-                              </div>
-                            </div>
-
-
-                            <div class="col-sm-2">Peperoni</div>
-                            <div class="col-sm-10">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                <label class="form-check-label" for="gridCheck1">
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="col-sm-2">Oeuf</div>
-                            <div class="col-sm-10">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                <label class="form-check-label" for="gridCheck1">
-                                </label>
-                              </div>
-                            </div>
-
-
-                            <div class="col-sm-2">Checkbox</div>
-                            <div class="col-sm-10">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                <label class="form-check-label" for="gridCheck1">
-                                </label>
-                              </div>
-                            </div>
-
-
-                            <div class="col-sm-2">Checkbox</div>
-                            <div class="col-sm-10">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                <label class="form-check-label" for="gridCheck1">
-                                </label>
-                              </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                          <div class="col-sm-2">Poulet</div>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="poulet">
+                              <label class="form-check-label" for="gridCheck1">
+                              </label>
                             </div>
                           </div>
-                          <div class="form-group row">
-                            <div class="col-sm-10">
-                              <button type="submit" class="btn btn-primary">Validez la pizza</button>
+                        
+                          <div class="col-sm-2">Kebab</div>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="kebab">
+                              <label class="form-check-label" for="kebab">
+                              </label>
                             </div>
                           </div>
-                      </form>
+                        
+                        
+                          <div class="col-sm-2">Peperoni</div>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="peperoni">
+                              <label class="form-check-label" for="peperoni">
+                              </label>
+                            </div>
+                          </div>
+                        
+                          <div class="col-sm-2">Oeuf</div>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="oeuf">
+                              <label class="form-check-label" for="oeuf">
+                              </label>
+                            </div>
+                          </div>
+                        
+                        
+                          <div class="col-sm-2">Poivrons</div>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="poivrons">
+                              <label class="form-check-label" for="poivrons">
+                              </label>
+                            </div>
+                          </div>
+                        
+                        
+                          <div class="col-sm-2">Mozarella</div>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="mozarella">
+                              <label class="form-check-label" for="mozarella">
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Validez la pizza</button>
+                          </div>
+                        </div>
+                    </form>
                   </div>
                 </div>
                 <div class="card-footer text-muted">
