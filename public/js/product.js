@@ -1,23 +1,77 @@
 $(document).ready(function(event) {
 
+  const modal_select = document.getElementById('staticBackdrop');
 
+  /* AJOUTER MODAL */ 
     $('.ajouter').click(function(eventclick) {
       eventclick.preventDefault();
-      console.log("cliqued");
       $.ajax({
-        url: "/demande-product",
+        url: "demande-product",
         type: "POST",
-        data: $(this).parent("form").attr("prodid"),
+        data: ($(this).parent()).children(".productclass"),
         success: function(res) {
-          console.log(res.prodid + "lblbllzbl");
+          $(".modal-body").empty();
+          $(".modal-body").append("ID : " + res);
+          $(".panierclass").attr("value", res);
+          $(".paniertype").attr("value", "pizza");
+
         }, error : function (err) {
-            console.log(err);
+            console.log(err + "erreur");
         }
     });
    });
+  /* AJOUTER MODAL */ 
+
+    $('.ajouter_panier').click(function(eventclick) {
+      eventclick.preventDefault();
+      console.log( $(this).parent().children()[1].value );
+      console.log( $(this).parent().children()[2].value );
+
+      let panierclass = $(this).parent().children()[1].value;  
+      let paniertype = $(this).parent().children()[2].value;
+
+      $.ajax({
+        url: "panier-add",
+        type: "POST",
+        data: {
+          panierid: (panierclass),
+          paniertype: (paniertype)
+        },
+          success: function(res) {
+          $(".modal-body").empty();
+          $(".modal-body").append("ID : " + res);
+          $(".panierclass").attr("value", res);
+          $(".paniertype").attr("value", "pizza");
+
+        }, error : function (err) {
+            console.log(err + "erreur");
+        }
+    });
+  });
+
+   /* PANIER */ 
+   
+
+ $('.retirer_panier').click(function(eventclick) {
+  eventclick.preventDefault();
+  console.log(($(this).parent()).children(".productclass") + " lalalala");
+    $.ajax({
+      url: "panier-delete",
+      type: "POST",
+      data: ($(this).parent()).children(".productclass"),
+      success: function(res) {
+        $(".modal-body").empty();
+        $(".modal-body").append("oui" + res);
+        console.log("super " + res);
+      }, error : function (err) {
+          console.log(err + "erreur");
+      }
+  });
+});
+   /* PANIER */ 
 
 
-      const modal_select = document.getElementById('staticBackdrop')
+
       modal_select.addEventListener('show.bs.modal', event => {
           const button = event.relatedTarget
         //  const recipient = button.getAttribute('data-bs-whatever')

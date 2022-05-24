@@ -24,22 +24,15 @@ const pool = new pg.Pool({
     port: 5432
 });
 
-async function getPizzas() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
-    return res.rows;
-}
-async function getBoissons() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
-    return res.rows;
-}
-async function getDesserts() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
-    return res.rows;
-}
-async function getEntrees() {
-    const res = await pool.query("SELECT * FROM produits WHERE produits.id_produit>19");
-    return res.rows;
-}
+/*
+const pool = new pg.Pool({
+    user: 'teixeira',
+    host: 'localhost',
+    database: 'gaby_will',
+    password: "pizza",
+    port: 5432
+});
+*/
 
 serv.get('/', function (req, res) {
     let commentaire = [["salut"]];
@@ -49,20 +42,23 @@ serv.get('/', function (req, res) {
 serv.get('/selection', async function (req, res) {
     if (typeof req.session == 'undefined') {
         req.session.cart = [];
+    }
+    if (typeof req.panier == 'undefined') {
         req.session.panier = [];
     }
     const res_boissons = await pool.query("SELECT * FROM produits WHERE produits.id_produit<18 AND produits.id_produit>10");
-    const res_entrees = pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
+    const res_entrees = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
     const res_deserts = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
     const res_pizzas = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
 
     res.render("page_selection.ejs", {
         pizzas: res_pizzas.rows,
-        boissons: getBoissons(),
-        deserts: getDesserts(),
-        entree: getEntrees(),
-        panier: req.session.panier,
-     });
+        boissons: res_boissons.rows,
+        deserts: res_deserts.rows,
+        entrees: res_entrees.rows,
+        panier: req.session.panier
+    });
+
 });
 
 serv.get('/custompizza',function (req,res,next) {
@@ -75,28 +71,32 @@ serv.get('/livraison',function (req,res) {
 });
 
 serv.post('/validationLivraison', function (req, res) {
-    let id_commande = req.body.commandeid
-    commande[id_commande][6]=true;
-    res.render("page_livraison.ejs", {produits:produit,commandes:commande})
+//    let id_commande = req.body.commandeid
+//    commande[id_commande][6]=true;
+//    res.render("page_livraison.ejs", {produits:produit,commandes:commande})
 });
 
 serv.post('/demande-product',function(req,res){
-    let id_commande = req.body.prodid;
-    console.log(JSON.stringify(req.body.prodid));
-    res.json(commande[id_commande][0]);
+    let id_commande = req.body.prod_id;
+    console.log(JSON.stringify(req.body.prod_id) + " - ID");
+    res.json(id_commande);
 });
 
-
 serv.post('/panier-add',function(req,res){
-    let id_element = req.body.prodid;
-    let type = req.body.type;
+    let id_element = req.body.panierid;
+    let type = req.body.paniertype;
+    console.log(type + " " + id_element);
+
     if(type == "produit"){
-        req.session.panier["produit"].append(id_element); //id_commande
+        req.session.panier.push(id_element); //id_commande
     }else if(type == "menu"){
-        req.session.panier["menu"].append(id_element); //id_commande
+        req.session.panier.push(id_element); //id_commande
     }else{
-        req.session.panier["custom"].append(id_element); //id_commande
+        req.session.panier.push(id_element); //id_commande
     }
+    req.session.save();
+    console.log(JSON.stringify(req.session.panier));
+    
 });
 
 serv.post('/panier-delete',function(req,res){

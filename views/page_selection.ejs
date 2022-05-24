@@ -11,14 +11,13 @@
 
     <body>
     <%- include ('header/navbar.ejs') %>
-    <%- include ('import_scripts/scripts_utils.ejs') %>
 
     <div class="container">
       <div class="row">
         <div class="d-md-flex align-items-start" id="panier">
           <div class="nav flex-column me-3">
            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-            aria-controls="offcanvasRight">Mon panier</button>
+            aria-controls="offcanvasRight">Mon panier <i class='fas fa-shopping-cart' style='font-size:12px'></i></button>
           </div>
         </div>
       </div>
@@ -41,21 +40,25 @@
     
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              
-              <%pizzas.forEach(function(pizza){   %>
-                      <div class="card" style="width: 15rem;">
-                        <img  src= '/<%=pizza[2]%>' class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"> <%= pizza[1] %> </h5>
-                            <p class="card-text">Pizza à la tomate fait maison.</p>
-                            <p class="card-text">Prix  <%= pizza[3] %></p>
-                            <form action="demande-product" method="post">
-                              <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Ajouter">
-                              <input name="prodid" type="hidden" class="productclass" value='<%= pizza[0] %>'>
-                              <input name="type" type="hidden" class="productclass" value='produit'>
-                            </form> 
-                        </div>`
-                <% }); %>
+
+              <div class="row">
+                <% for (var i=0;i<pizzas.length;i++) { %>
+                    <div class="card" style="width: 15rem;">
+                      <img src="<%=pizzas[i]["url_image"]%>" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          <%=pizzas[i]["nom_produits"]%>
+                        </h5>
+                        <p class="card-text">Prix <%= pizzas[i]["prix"]%> €</p>
+
+                        <form action="demande-product" method="post">
+                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Ajouter">
+                          <input name="prod_id" type="hidden" class="productclass" value="<%=pizzas[i]["id_produit"]%>">
+                        </form>
+                      </div>
+                    </div>
+                <% } %>
+                </div>
             </div>
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
               <div id="boisson" class="row"> </div>
@@ -72,13 +75,13 @@
     <!-- PANIER - CANVAS --> 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
       <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">Mon panier</h5>
+        <h5 id="offcanvasRightLabel">Mon panier <i class='fas fa-shopping-cart' style='font-size:12px'></i></h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <%panier.forEach(function(panier){   %>
-              <p> <%=panier%></p>
-          <% } %>
+        <% for (var i = 0; i < panier.length; i++) {   %>
+          <p> <%= panier[i] %></p>
+        <% } %>
       </div>
     </div>
 
@@ -97,7 +100,11 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary" id="liveToastBtn">Ajouter au panier</button>
+            <form action="/panier-add" method="post">
+              <input type="submit" class="ajouter_panier btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Ajouter au panier">
+              <input name="panier_item" type="hidden" class="panierclass">
+              <input name="type" type="hidden" class="paniertype">
+            </form>
           </div>
         </div>
       </div>
@@ -113,6 +120,8 @@
       </div>
     </div>
     <!-- TOAST PANIER-->
+
+    <%- include ('import_scripts/scripts_utils.ejs') %>
 
 
   </body>
