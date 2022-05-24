@@ -32,11 +32,11 @@ VALUES
 INSERT INTO taille_produit (taille)
 VALUES (1),(2),(3);
 
-INSERT INTO menu (nom_menu,prix)
+INSERT INTO menu (nom_menu,url_image,prix)
 VALUES 
-    ('Menu Etudiant',8),
-    ('Menu duo',15),
-    ('Mega Party',35);
+    ('Menu Etudiant','images/menuduo.jpg',8),
+    ('Menu duo','images/menuduo.jpg',15),
+    ('Mega Party','images/menu_party.jpg',35);
 
 INSERT INTO menu_produit (id_menu,id_produit)
 VALUES 

@@ -38,11 +38,20 @@ serv.get('/selection', async function (req, res) {
     const res_entrees = await pool.query("SELECT * FROM produits WHERE produits.id_produit>19");
     const res_deserts = await pool.query("SELECT * FROM produits WHERE produits.id_produit<20 AND produits.id_produit>17");
     const res_pizzas = await pool.query("SELECT * FROM produits WHERE produits.id_produit<11");
+    const res_menu = await pool.query("SELECT * FROM menu");
+    let menuu=res_menu.rows;
+    let items=[];
+    for(var i =0;i<menuu.length;i++){
+        var items_menu=await pool.query("SELECT nom_produit FROM produits NATURAL JOIN menu_produit WHERE id_menu ="+menuu[i]["id_menu"]+" AND menu_produit.id_produit=produits.id_produit;");
+        items.push(items_menu.rows);
+    }
     res.render("page_selection.ejs", {
         pizzas: res_pizzas.rows,
         boissons: res_boissons.rows,
         deserts: res_deserts.rows,
-        entrees: res_entrees.rows
+        entrees: res_entrees.rows,
+        menus: res_menu.rows,
+        menu_items : items
     });
 });
 
@@ -63,8 +72,6 @@ serv.get('/livraison', async function (req, res) {
         resultat = f.rows.concat(x.rows);
         produit.push(resultat);
     }
-    console.log(produit);
-    console.log(retn);
     res.render("page_livraison.ejs", {
         commandes: retn
         , produits: produit
@@ -73,8 +80,8 @@ serv.get('/livraison', async function (req, res) {
 
 serv.post('/validationLivraison', async function (req, res) {
     let id_commande = req.body.commandeid
-    pool.query("UPDATE commandes SET livraison=TRUE WHERE id_command=" + id_commande + ";")
-    const commandes_sql = await pool.query("SELECT * FROM commandes");
+    await pool.query("UPDATE commandes SET livraison=TRUE WHERE id_command=" + id_commande + ";")
+    var commandes_sql = await pool.query("SELECT * FROM commandes");
     let retn = commandes_sql.rows;
     let produit = [];
     for (var i = 0; i < retn.length; i++) {
