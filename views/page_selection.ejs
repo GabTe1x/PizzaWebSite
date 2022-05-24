@@ -50,7 +50,6 @@
                         </h5>
                         <p class="card-text"><%=menus[i]["produit_description"]%><br> Prix <%= menus[i]["prix"]%> €</p>
                         <ul>
-                          <%console.log(menu_items[i].length);%>
                         <%for(var j=0;j<menu_items[i].length;j++){%>
                           <li><%=menu_items[i][j]["nom_produit"]%></li>
                         <%}%>
