@@ -42,12 +42,29 @@ CREATE TABLE IF NOT EXISTS taille_produit (
 	id_taille_produit SERIAL PRIMARY KEY,
 	taille integer NOT NULL CHECK (taille > 0 AND taille < 4)
 );
-/* PRODUIT DE BASE */
+/* COMMANDE */
+CREATE TABLE IF NOT EXISTS commandes (
+	id_command SERIAL PRIMARY KEY,
+	nom_user varchar(255) NOT NULL,
+	adresse_livraison varchar(255) NOT NULL,
+	complementaire varchar(255) NOT NULL,
+	livraison boolean NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS commandes_listes (
+	id_commande_list integer,
+  types_produit integer NOT NULL CHECK (types_produit > 0 AND types_produit < 4), /* 1=STANDART, 2=MENU, 3= PIZZA CUSTOM */
+	id_produits integer NOT NULL,
+  id_taille_produit integer,
+  FOREIGN KEY (id_taille_produit) REFERENCES taille_produit (id_taille_produit),
+  FOREIGN KEY (id_commande_list) REFERENCES commandes (id_command)
+);
 
 /* MENU */
 CREATE TABLE IF NOT EXISTS menu (
   id_menu SERIAL PRIMARY KEY,
   nom_menu varchar(255) NOT NULL,
+  url_image varchar(255) NOT NULL,
   prix integer NOT NULL
 );
 
