@@ -41,11 +41,7 @@ $(document).ready(function(event) {
           paniertype: (paniertype)
         },
           success: function(res) {
-          $(".modal-body").empty();
-          $(".modal-body").append("ID : " + res);
-          $(".panierclass").attr("value", res);
-          $(".paniertype").attr("value", "pizza");
-
+          $(".offcanvas-body").append("ID : " + res);
         }, error : function (err) {
             console.log(err + "erreur");
         }
