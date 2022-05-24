@@ -5,16 +5,19 @@ $(document).ready(function(event) {
   /* AJOUTER MODAL */ 
     $('.ajouter').click(function(eventclick) {
       eventclick.preventDefault();
+      console.log("LALALALAL" + $(this).parent().children()[1].value);
+
+      let id = $(this).parent().children()[1].value;
+      
       $.ajax({
         url: "demande-product",
         type: "POST",
-        data: ($(this).parent()).children(".productclass"),
+        data: id,
         success: function(res) {
           $(".modal-body").empty();
           $(".modal-body").append("ID : " + res);
           $(".panierclass").attr("value", res);
           $(".paniertype").attr("value", "pizza");
-
         }, error : function (err) {
             console.log(err + "erreur");
         }

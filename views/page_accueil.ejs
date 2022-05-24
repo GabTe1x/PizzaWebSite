@@ -21,19 +21,19 @@
         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="images/pizza/pizza_slide_1.jpg" class="d-block w-100" alt="...">
+              <img src="images/pizza/pizza_slide_1.png" class="d-block w-100" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <a class="btn btn-danger btn-lg" href="selection">Commander</a>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="images/pizza/pizza_slide_2.jpg" class="d-block w-100" alt="...">
+              <img src="images/pizza/pizza_slide_2.png" class="d-block w-100" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <a class="btn btn-warning btn-lg" href="selection">Commander</a>
               </div>
             </div>
             <div class="carousel-item">
-              <img src="images/pizza/pizza_slide_3.jpg" class="d-block w-100" alt="...">
+              <img src="images/pizza/pizza_slide_3.png" class="d-block w-100" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <a class="btn btn-success btn-lg" href="selection">Commander</a>
               </div>
@@ -52,17 +52,20 @@
         </div>
       </div>
       <div class="row align-items-center">
-        <div class="col"><h3>Customisez vos pizzas comme vous voulez !</h3></div>
+        <div class="col text-center">
+          <h3>Customisez vos pizzas comme vous les voulez !</h3>
+          <a class="btn btn-warning btn-lg" href="custompizza">Essayer !</a>
+        </div>
         <div class="col"><img src="images/pizza/multichoix.png" id="multichoix" class="img-fluid"></div>
       </div>
       <div class="row align-items-center">
         <%for (var i=0;i<commentaire.length;i++){ %>
           <figure class="col-lg-3 col-md-4 col-sm-6">
             <blockquote class="blockquote">
-              <p><%=commentaire[i][2]%></p>
+              <p><%=commentaire[i]["commentaire"]%></p>
             </blockquote>
             <figcaption class="blockquote-footer">
-              <%=commentaire[i][0]%> <%=commentaire[i][1]%>
+              <%=commentaire[i]["nom"]%> <%=commentaire[i]["prenom"]%>
             </figcaption>
           </figure>
         <%}%>
