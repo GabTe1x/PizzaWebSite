@@ -17,7 +17,7 @@ serv.use(session({
 
 const pg = require('pg');
 const { query } = require('express');
-
+/*
 const pool = new pg.Pool({
     user: 'postgres',
     host: 'localhost',
@@ -25,8 +25,8 @@ const pool = new pg.Pool({
     password: "001",
     port: 5432
 });
+*/
 
-/*
 const pool = new pg.Pool({
     user: 'teixeira',
     host: 'localhost',
@@ -34,7 +34,7 @@ const pool = new pg.Pool({
     password: "pizza",
     port: 5432
 });
-*/
+
 
 serv.get('/', async function (req, res) {
     let commentaire = await pool.query("SELECT * FROM commentaires");
@@ -74,11 +74,11 @@ serv.get('/selection', async function (req, res) {
         boissons: res_boissons.rows,
         deserts: res_deserts.rows,
         entrees: res_entrees.rows,
+        menus: res_menu.rows,
+        menu_items: items,
         panier_menu: req.session.panier_menu,
         panier_custom: req.session.panier_custom,
-        panier_product: req.session.panier_product,
-        menus: res_menu.rows,
-        menu_items: items
+        panier_product: req.session.panier_product
     });
 });
 
