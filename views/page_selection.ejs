@@ -11,28 +11,28 @@
 
     <body>
     <%- include ('header/navbar.ejs') %>
-    <%- include ('import_scripts/scripts_utils.ejs') %>
 
       <div class="row">
         <div class="d-md-flex align-items-start" id="panier">
           <div class="nav flex-column me-3">
-           <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-            aria-controls="offcanvasRight">Mon panier</button>
+           <button class="btn btn-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+            aria-controls="offcanvasRight">Mon panier <i class='fas fa-shopping-cart' style='font-size:12px'></i></button>
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="d-md-flex align-items-start" id="menu">
           <div class="nav col-xm-12 col-md-2 nav-pills me-3" role="tablist" aria-orientation="vertical">
-            <button class="nav-link active" id="control_menu" data-bs-toggle="pill" data-bs-target="#menus"
+            <button class="nav-link btn-warning active " id="control_menu" data-bs-toggle="pill" data-bs-target="#menus"
               type="button" role="tab" aria-controls="menus" aria-selected="true">Nos menus</button>
-            <button class="nav-link" id="entrees_control" data-bs-toggle="pill" data-bs-target="#entrees"
+            <button class="nav-link btn-warning" id="entrees_control" data-bs-toggle="pill" data-bs-target="#entrees"
               type="button" role="tab" aria-controls="entrees" aria-selected="false">Nos entrées</button>
-            <button class="nav-link" id="pizza_control" data-bs-toggle="pill" data-bs-target="#pizza"
+            <button class="nav-link btn-warning" id="pizza_control" data-bs-toggle="pill" data-bs-target="#pizza"
               type="button" role="tab" aria-controls="pizza" aria-selected="false">Nos pizzas</button>
-            <button class="nav-link" id="boissons_control" data-bs-toggle="pill" data-bs-target="#boissons"
+            <button class="nav-link btn-warning" id="boissons_control" data-bs-toggle="pill" data-bs-target="#boissons"
               type="button" role="tab" aria-controls="boissons" aria-selected="false">Nos boissons</button>
-            <button class="nav-link" id="deserts_control" data-bs-toggle="pill" data-bs-target="#deserts"
+            <button class="nav-link btn-warning" id="deserts_control" data-bs-toggle="pill" data-bs-target="#deserts"
               type="button" role="tab" aria-controls="deserts" aria-selected="false">Nos deserts</button>
             <!--<button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
               type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Mes pizzas customs</button>-->
@@ -55,9 +55,10 @@
                         <%}%>
                         </ul>
                         <form action="demande-product" method="post">
-                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                          <input type="submit" class="ajouter btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             value="Ajouter">
-                          <input name="prodid" type="hidden" class="productclass" value='<%= menus[i]["id_menu"] %>'>
+                          <input name="prodid" type="hidden" class="productclass" value="<%=menu_items[i]["id_produits"]%>">
+                          <input name="type" type="hidden" class="paniertype" value="menu">
                         </form>
                       </div>
                     </div>
@@ -75,9 +76,10 @@
                         </h5>
                         <p class="card-text"><%=entrees[i]["produit_description"]%><br> Prix <%= entrees[i]["prix"]%> €</p>
                         <form action="demande-product" method="post">
-                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                          <input type="submit" class="ajouter_panier btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             value="Ajouter">
-                          <input name="prodid" type="hidden" class="productclass" value='<%= entrees[i]["id_produits"] %>'>
+                          <input name="prodid" type="hidden" class="productclass" value="<%=pizzas[i]["id_produits"]%>">
+                          <input name="type" type="hidden" class="paniertype" value="product">
                         </form>
                       </div>
                     </div>
@@ -95,14 +97,14 @@
                       </h5>
                       <p class="card-text"><%=pizzas[i]["produit_description"]%><br> Prix <%= pizzas[i]["prix"]%> €</p>
                       <form action="demande-product" method="post">
-                        <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        <input type="submit" class="ajouter_panier btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                           value="Ajouter">
-                        <input name="prodid" type="hidden" class="productclass" value='<%= pizzas[i]["id_produits"] %>'>
+                        <input name="prodid" type="hidden" class="productclass" value="<%=pizzas[i]["id_produits"]%>">
+                        <input name="type" type="hidden" class="paniertype" value="product">
                       </form>
                     </div>
-                  </div>
-              <% } %>
-              </div>
+                <% } %>
+                </div>
             </div>
             <div class="tab-pane fade" id="boissons" role="tabpanel" aria-labelledby="boissons_control">
               <div class="row">
@@ -115,9 +117,10 @@
                         </h5>
                         <p class="card-text"><%=boissons[i]["produit_description"]%><br> Prix <%= boissons[i]["prix"]%> €</p>
                         <form action="demande-product" method="post">
-                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                          <input type="submit" class="ajouter_panier btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             value="Ajouter">
-                          <input name="prodid" type="hidden" class="productclass" value='<%= boissons[i]["id_produits"] %>'>
+                          <input name="prodid" type="hidden" class="productclass"  value="<%=boissons[i]["id_produits"]%>" >
+                          <input name="type" type="hidden" class="paniertype" value="product">
                         </form>
                       </div>
                     </div>
@@ -135,9 +138,10 @@
                         </h5>
                         <p class="card-text"><%=deserts[i]["produit_description"]%><br> Prix <%=deserts[i]["prix"]%> €</p>
                         <form action="demande-product" method="post">
-                          <input type="submit" class="ajouter btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                          <input type="submit" class="ajouter_panier btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                             value="Ajouter">
-                          <input name="prodid" type="hidden" class="productclass" value='<%= deserts[i]["id_produits"] %>'>
+                          <input name="prodid" type="hidden" class="productclass" value="<%=deserts[i]["id_produits"]%>">
+                          <input name="type" type="hidden" class="paniertype" value="product">
                         </form>
                       </div>
                     </div>
@@ -151,35 +155,41 @@
     <!-- PANIER - CANVAS --> 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
       <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">Mon panier</h5>
+        <h5 id="offcanvasRightLabel">Mon panier <i class='fas fa-shopping-cart' style='font-size:12px'></i></h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        la panier
+
+        <% for (var i = 0; i < panier_menu.length; i++) {   %>
+          <div class=""> 
+            <p> <%= panier_menu[i] %></p>
+            <p class="retirer_panier""> X </p>
+          </div>
+        <% } %>
+
+        <% for (var i = 0; i < panier_product.length; i++) {   %>
+          <div class=""> 
+            <p> <%= panier_product[i] %></p>
+            <p class="retirer_panier""> X </p>
+        </div>
+        <% } %>
+
+        <% for (var i = 0; i < panier_custom.length; i++) {   %>
+          <div class=""> 
+            <p> <%= panier_custom[i] %></p>
+            <p class="retirer_panier""> X </p>
+          </div>
+        <% } %>
+
+        <form action="/validercommand" method="post">
+          <input type="submit" class="ajouter_panier btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="Valider le panier">
+          <input name="panier_item" type="hidden" class="panierclass">
+          <input name="type" type="hidden" class="paniertype">
+        </form>
       </div>
     </div>
 
     <!-- PANIER - CANVAS --> 
-
-    <!-- MODAL - SELECTION --> 
-     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary" id="liveToastBtn">Ajouter au panier</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- MODAL SELECTION --> 
 
     <!-- TOAST PANIER-->
     <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
@@ -191,6 +201,6 @@
     </div>
     <!-- TOAST PANIER-->
 
-
+    <%- include ('import_scripts/scripts_utils.ejs') %>
   </body>
 </html>
