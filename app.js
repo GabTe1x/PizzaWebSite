@@ -80,8 +80,8 @@ serv.get('/livraison', async function (req, res) {
 
 serv.post('/validationLivraison', async function (req, res) {
     let id_commande = req.body.commandeid
-    pool.query("UPDATE commandes SET livraison=TRUE WHERE id_command=" + id_commande + ";")
-    const commandes_sql = await pool.query("SELECT * FROM commandes");
+    await pool.query("UPDATE commandes SET livraison=TRUE WHERE id_command=" + id_commande + ";")
+    var commandes_sql = await pool.query("SELECT * FROM commandes");
     let retn = commandes_sql.rows;
     let produit = [];
     for (var i = 0; i < retn.length; i++) {
