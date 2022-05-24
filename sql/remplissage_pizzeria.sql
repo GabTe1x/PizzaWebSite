@@ -50,3 +50,28 @@ VALUES
     (3,8),
     (3,1),
     (3,7);
+
+INSERT INTO commentaires (nom,prenom,commentaire)
+VALUES
+    ('Sam','Pairturbe','Les meilleurs pizzas de mon quartier'),
+    ('May','Chavait','Je suis devenu client fidèle dès la première hehe'),
+    ('Gerad','Menvoussa','Un service de livraison qui met getir à genoux'),
+    ('Willy','& Gaby','La qualitée au meilleur prix'),
+    ('Jean','Rapheaul','MasterClass'),
+    ('Sarah','Molih','Un site sans égal !');
+
+INSERT INTO commandes (nom_user,adresse_livraison,complementaire,livraison)
+VALUES
+    ('Sam Pairturbe','44 Boulevard de bessières','Batiment B',FALSE),
+    ('May Chavait','4 Quai de Bercy','RDC',FALSE),
+    ('Jean Rapheaul','Rue du Paradis','code BB',FALSE);
+
+INSERT INTO commandes_listes (id_commande_list,types_produit,id_produits,id_taille_produit)
+VALUES
+    (1,1,1,2),
+    (1,1,15,NULL),
+    (1,1,9,3),
+    (2,1,9,1),
+    (3,1,4,2),
+    (3,1,19,NULL),
+    (3,1,9,3);
