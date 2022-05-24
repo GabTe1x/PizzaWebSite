@@ -5,7 +5,8 @@ const port = 8080;
 
 serv.set('view engine', 'ejs');
 serv.use(express.static('public'));
-let bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const url=require('url');
 serv.use(bodyParser.json());
 serv.use(bodyParser.urlencoded({ extended: true }));
 serv.use(session({
@@ -15,6 +16,7 @@ serv.use(session({
 }));
 
 const pg = require('pg');
+const { query } = require('express');
 
 const pool = new pg.Pool({
     user: 'postgres',
@@ -139,6 +141,56 @@ serv.get('/livraison', async function (req, res) {
         , produits: produit
     });
 });
+serv.get('/Commander',function(req,res){
+    res.render("page_commander")
+})
+serv.get('/commandes',async function(req,res){
+    var tab=url.parse(req.url,true);
+    var nom=tab["query"]["nom"];
+    var prenom=tab["query"]["prenom"];
+    var addresse=tab["query"]["addresse"];
+    var complementaire=tab["query"]["complementaire"];
+    var commentaire=tab["query"]["commentaire"];
+    if(commentaire!='undefined'){
+        await pool.query("INSERT INTO commentaires (nom,prenom,commentaire) VALUES ('"+nom+"','"+prenom+"','"+commentaire+"');");
+    }
+    await pool.query("INSERT INTO commandes (nom_user,adresse_livraison,complementaire,livraison) VALUES ('"+nom+" "+prenom+"','"+addresse+"','"+complementaire+"',FALSE);");
+    var commandes_sql = await pool.query("SELECT * FROM commandes");
+    let retn = commandes_sql.rows;
+    let produit = [];
+    for (var i = 0; i < retn.length; i++) {
+        let s1 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.types_produit=1;"
+        let s2 = "select nom_menu AS nom_produit,prix from menu natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND menu.id_menu=commandes_listes.id_produits AND commandes_listes.types_produit=2;"
+        let s3 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.type_produit=3;"
+        let f = await pool.query(s1);
+        let x = await pool.query(s2);
+        resultat = f.rows.concat(x.rows);
+        produit.push(resultat);
+    }
+    res.render("page_livraisonsclient", {
+        commandes: retn
+        , produits: produit
+    });
+})
+
+serv.get('/livraisonsClient',async function(req,res){
+    var commandes_sql = await pool.query("SELECT * FROM commandes");
+    let retn = commandes_sql.rows;
+    let produit = [];
+    for (var i = 0; i < retn.length; i++) {
+        let s1 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.types_produit=1;"
+        let s2 = "select nom_menu AS nom_produit,prix from menu natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND menu.id_menu=commandes_listes.id_produits AND commandes_listes.types_produit=2;"
+        let s3 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.type_produit=3;"
+        let f = await pool.query(s1);
+        let x = await pool.query(s2);
+        resultat = f.rows.concat(x.rows);
+        produit.push(resultat);
+    }
+    res.render("page_livraisonsclient", {
+        commandes: retn
+        , produits: produit
+    });
+})
 
 serv.post('/validationLivraison', async function (req, res) {
     let id_commande = req.body.commandeid
