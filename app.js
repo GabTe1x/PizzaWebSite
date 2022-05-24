@@ -25,9 +25,9 @@ const pool = new pg.Pool({
 });
 
 
-serv.get('/', function (req, res) {
-    let commentaire = [["salut"]];
-    res.render("page_accueil", { commentaire: commentaire });
+serv.get('/', async function (req, res) {
+    let commentaire = await pool.query("SELECT * FROM commentaires");
+    res.render("page_accueil", { commentaire: commentaire.rows });
 });
 
 serv.get('/selection', async function (req, res) {
@@ -55,7 +55,7 @@ serv.get('/selection', async function (req, res) {
     });
 });
 
-serv.get('/custompizza',function (req,res,next) {
+serv.get('/custompizza', function (req, res, next) {
     res.render("page_custom");
 });
 
@@ -78,13 +78,28 @@ serv.get('/livraison', async function (req, res) {
     });
 });
 
-serv.post('/validationLivraison', function (req, res) {
+serv.post('/validationLivraison', async function (req, res) {
     let id_commande = req.body.commandeid
-    commande[id_commande][6]=true;
-    res.render("page_livraison.ejs", {produits:produit,commandes:commande})
+    pool.query("UPDATE commandes SET livraison=TRUE WHERE id_command=" + id_commande + ";")
+    const commandes_sql = await pool.query("SELECT * FROM commandes");
+    let retn = commandes_sql.rows;
+    let produit = [];
+    for (var i = 0; i < retn.length; i++) {
+        let s1 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.types_produit=1;"
+        let s2 = "select nom_menu AS nom_produit,prix from menu natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND menu.id_menu=commandes_listes.id_produits AND commandes_listes.types_produit=2;"
+        let s3 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.type_produit=3;"
+        let f = await pool.query(s1);
+        let x = await pool.query(s2);
+        resultat = f.rows.concat(x.rows);
+        produit.push(resultat);
+    }
+    res.render("page_livraison.ejs", {
+        commandes: retn
+        , produits: produit
+    });
 });
 
-serv.post('/demande-product',function(req,res){
+serv.post('/demande-product', function (req, res) {
     let id_commande = req.body.prodid;
     console.log(JSON.stringify(req.body.prodid));
     res.json(commande[id_commande][0]);
