@@ -49,27 +49,16 @@ serv.get('/selection', async function (req, res) {
         pizzas: res_pizzas.rows,
         boissons: res_boissons.rows,
         deserts: res_deserts.rows,
-<<<<<<< Updated upstream
-        entrees: res_entrees.rows
-     });
-=======
         entrees: res_entrees.rows,
         menus: res_menu.rows,
         menu_items : items
     });
->>>>>>> Stashed changes
 });
 
 serv.get('/custompizza',function (req,res,next) {
     res.render("page_custom");
 });
 
-<<<<<<< Updated upstream
-
-serv.get('/livraison',function (req,res) {
-    console.log("Demande la page Livraison");
-    res.render("page_livraison.ejs", { produits: produit, commandes: commande });
-=======
 serv.get('/livraison', async function (req, res) {
     const commandes_sql = await pool.query("SELECT * FROM commandes");
     let retn = commandes_sql.rows;
@@ -87,7 +76,6 @@ serv.get('/livraison', async function (req, res) {
         commandes: retn
         , produits: produit
     });
->>>>>>> Stashed changes
 });
 
 serv.post('/validationLivraison', function (req, res) {
