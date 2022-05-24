@@ -41,29 +41,33 @@
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="menus" role="tabpanel" aria-labelledby="control_menu">
               <div class="row">
-                <% for (var i=0;i<menus.length;i++) { %>
-                    <div class="card" style="width: 15rem;">
-                      <img src="<%=menus[i]["url_image"]%>" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">
-                          <%=menus[i]["nom_menu"]%>
-                        </h5>
-                        <p class="card-text"><%=menus[i]["produit_description"]%><br> Prix <%= menus[i]["prix"]%> €</p>
-                        <ul>
+                  <% for (var i=0;i<menus.length;i++) { %>
+                  <div class="card" style="width: 15rem;">
+                    <img src="<%=menus[i]["url_image"]%>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <%=menus[i]["nom_menu"]%>
+                      </h5>
+                      <p class="card-text">
+                        <%=menus[i]["produit_description"]%><br> Prix <%= menus[i]["prix"]%> €
+                      </p>
+                      <ul>
                         <%for(var j=0;j<menu_items[i].length;j++){%>
-                          <li><%=menu_items[i][j]["nom_produit"]%></li>
-                        <%}%>
-                        </ul>
-                        <form action="demande-product" method="post">
-                          <input type="submit" class="ajouter btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                            value="Ajouter">
-                          <input name="prodid" type="hidden" class="productclass" value="<%=menu_items[i]["id_produits"]%>">
-                          <input name="type" type="hidden" class="paniertype" value="menu">
-                        </form>
-                      </div>
+                          <li>
+                            <%=menu_items[i][j]["nom_produit"]%>
+                          </li>
+                          <%}%>
+                      </ul>
+                      <form action="demande-product" method="post">
+                        <input type="submit" class="ajouter btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                          value="Ajouter">
+                        <input name="prodid" type="hidden" class="productclass" value="<%=menu_items[i][" id_produits"]%>">
+                        <input name="type" type="hidden" class="paniertype" value="menu">
+                      </form>
                     </div>
-                <% } %>
-                </div>
+                  </div>
+                  <% } %>
+              </div>
             </div>
             <div class="tab-pane fade" id="entrees" role="tabpanel" aria-labelledby="entrees_control">
               <div class="row">
@@ -103,6 +107,7 @@
                         <input name="type" type="hidden" class="paniertype" value="product">
                       </form>
                     </div>
+                  </div>
                 <% } %>
                 </div>
             </div>

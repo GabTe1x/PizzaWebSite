@@ -17,7 +17,7 @@ serv.use(session({
 
 const pg = require('pg');
 const { query } = require('express');
-
+/*
 const pool = new pg.Pool({
     user: 'postgres',
     host: 'localhost',
@@ -25,8 +25,8 @@ const pool = new pg.Pool({
     password: "001",
     port: 5432
 });
+*/
 
-/*
 const pool = new pg.Pool({
     user: 'teixeira',
     host: 'localhost',
@@ -34,7 +34,7 @@ const pool = new pg.Pool({
     password: "pizza",
     port: 5432
 });
-*/
+
 
 serv.get('/', async function (req, res) {
     let commentaire = await pool.query("SELECT * FROM commentaires");
@@ -74,11 +74,11 @@ serv.get('/selection', async function (req, res) {
         boissons: res_boissons.rows,
         deserts: res_deserts.rows,
         entrees: res_entrees.rows,
+        menus: res_menu.rows,
+        menu_items: items,
         panier_menu: req.session.panier_menu,
         panier_custom: req.session.panier_custom,
-        panier_product: req.session.panier_product,
-        menus: res_menu.rows,
-        menu_items: items
+        panier_product: req.session.panier_product
     });
 });
 
@@ -173,7 +173,7 @@ serv.get('/commandes',async function(req,res){
     });
 })
 
-serv.get('/livraisonsClient',async function(req,res){
+serv.get('/livraisonsclient',async function(req,res){
     var commandes_sql = await pool.query("SELECT * FROM commandes");
     let retn = commandes_sql.rows;
     let produit = [];
@@ -192,7 +192,7 @@ serv.get('/livraisonsClient',async function(req,res){
     });
 })
 
-serv.post('/validationLivraison', async function (req, res) {
+serv.get('/validationLivraison', async function (req, res) {
     let id_commande = req.body.commandeid
     await pool.query("UPDATE commandes SET livraison=TRUE WHERE id_command=" + id_commande + ";")
     var commandes_sql = await pool.query("SELECT * FROM commandes");
@@ -214,24 +214,7 @@ serv.post('/validationLivraison', async function (req, res) {
 });
 
 serv.post('/validationPizzaCustom', async function (req, res) {
-    let id_commande = req.body.commandeid
-    await pool.query("UPDATE commandes SET livraison=TRUE WHERE id_command=" + id_commande + ";")
-    var commandes_sql = await pool.query("SELECT * FROM commandes");
-    let retn = commandes_sql.rows;
-    let produit = [];
-    for (var i = 0; i < retn.length; i++) {
-        let s1 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.types_produit=1;"
-        let s2 = "select nom_menu AS nom_produit,prix from menu natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND menu.id_menu=commandes_listes.id_produits AND commandes_listes.types_produit=2;"
-        let s3 = "select nom_produit,prix from produits  natural join commandes_listes WHERE " + retn[i]["id_command"] + "=id_commande_list AND produits.id_produit=commandes_listes.id_produits AND commandes_listes.type_produit=3;"
-        let f = await pool.query(s1);
-        let x = await pool.query(s2);
-        resultat = f.rows.concat(x.rows);
-        produit.push(resultat);
-    }
-    res.render("page_livraison.ejs", {
-        commandes: retn
-        , produits: produit
-    });
+    let commentaire = await pool.query("SELECT * FROM commentaires");
 });
 
 function removeItem(arr, value) {
